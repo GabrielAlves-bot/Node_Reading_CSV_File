@@ -14,23 +14,29 @@ model uf{
   id Int  @id @default(autoincrement())
   sigla String  @db.VarChar(2)
   nome_uf String @db.VarChar(50)
-
+  cidade cidade[]
+  
 }
 
 model cidade{
-  id Int  @id @default(autoincrement())
-  uf_id Int 
-  nome String @db.VarChar(255)
+  id Int  @id @default(autoincrement()) 
+  uf_Id  Int
+  uf uf? @relation(fields: [uf_Id], references: [id])
+  nome String @db.VarChar(255) 
   populacao Int
   latitude String @db.VarChar(255)
   longitude String @db.VarChar(255)
   cod_ibge String @db.VarChar(255)
   cod_siafi String @db.VarChar(255)
+  empresa empresa[]
+ 
+  
 }
 
 model empresa{
   id Int  @id @default(autoincrement())
   cidade_id Int
+  cidade cidade? @relation(fields: [cidade_id], references: [id])
   slug String @db.VarChar(255)
   nome_fantasia String @db.VarChar(255)
   dt_inicio_atividade DateTime
